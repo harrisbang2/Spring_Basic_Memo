@@ -20,12 +20,10 @@ import java.util.List;
 @RequestMapping("/api")
 public class MemoController {
 
-    private final JdbcTemplate jdbcTemplate;
     private final memoService memos ;
 
-    public MemoController(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-        memos = new memoService(jdbcTemplate);
+    public MemoController(memoService memoservice) {
+        this.memos = memoservice;
     }
 
     @PostMapping("/memos")

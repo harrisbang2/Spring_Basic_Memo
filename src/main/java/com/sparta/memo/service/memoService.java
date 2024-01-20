@@ -8,19 +8,18 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
-
+@Component
 public class memoService {
-    private final JdbcTemplate jdbcTemplate;
     private final memoRepository repo; // repository
-    public memoService(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-        repo = new memoRepository(jdbcTemplate); // repository
+    public memoService(memoRepository jdbcTemplate) {
+        repo = jdbcTemplate; // repository
     }
 
     public MemoResponseDto createMemo(MemoRequestDto requestDto) { // create memo service
