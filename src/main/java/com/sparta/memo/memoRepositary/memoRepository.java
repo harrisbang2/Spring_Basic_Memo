@@ -15,8 +15,9 @@ import java.util.List;
 
 public class memoRepository {
     private final JdbcTemplate jdbcTemplate;
+    Memo memo; // memo
     public memoRepository(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+        this.jdbcTemplate = jdbcTemplate;// repository
     }
 
     public Memo createkeyHolder(Memo memo, KeyHolder keyHolder) {
@@ -52,7 +53,7 @@ public class memoRepository {
     public Long putMemo(MemoRequestDto requestDto, long id) {
         // memo 내용 수정
         // 해당 메모가 DB에 존재하는지 확인
-        Memo memo = findById(id);
+        memo = findById(id);
         if(memo != null) {
         String sql = "UPDATE memo SET username = ?, contents = ? WHERE id = ?";
         jdbcTemplate.update(sql, requestDto.getUsername(), requestDto.getContents(), id);
@@ -66,12 +67,11 @@ public class memoRepository {
 
     ////////////////////////////////////////////////////////////////////////
     private Memo findById(Long id) {
-        memoRepository repo = new memoRepository(jdbcTemplate); // repository
         // DB 조회
         String sql = "SELECT * FROM memo WHERE id = ?";
         return jdbcTemplate.query(sql, resultSet -> {
             if(resultSet.next()) {
-                Memo memo = new Memo();
+                memo = new Memo();
                 memo.setUsername(resultSet.getString("username"));
                 memo.setContents(resultSet.getString("contents"));
                 return memo;
@@ -83,12 +83,11 @@ public class memoRepository {
     }
 
     public Long deleteMemo(long id) {
-        Memo memo = findById(id);
+        memo = findById(id);
         if(memo != null) {
             // memo 삭제
             String sql = "DELETE FROM memo WHERE id = ?";
             jdbcTemplate.update(sql, id);
-
             return id;
         } else {
             throw new IllegalArgumentException("선택한 메모는 존재하지 않습니다.");
