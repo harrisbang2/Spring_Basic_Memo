@@ -3,6 +3,7 @@ package com.sparta.memo.memoRepositary;
 import com.sparta.memo.dto.MemoRequestDto;
 import com.sparta.memo.dto.MemoResponseDto;
 import com.sparta.memo.entity.Memo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.KeyHolder;
@@ -15,11 +16,13 @@ import java.sql.Statement;
 import java.util.List;
 @Component
 public class memoRepository {
-    private final JdbcTemplate jdbcTemplate;
     Memo memo; // memo
-    public memoRepository(JdbcTemplate jdbcTemplate) {
+    private JdbcTemplate jdbcTemplate;
+    @Autowired
+    public void setmemoRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;// repository
     }
+
 
     public Memo createkeyHolder(Memo memo, KeyHolder keyHolder) {
         String sql = "INSERT INTO memo (username, contents) VALUES (?, ?)";

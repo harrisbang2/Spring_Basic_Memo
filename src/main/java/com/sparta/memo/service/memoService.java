@@ -4,6 +4,7 @@ import com.sparta.memo.dto.MemoRequestDto;
 import com.sparta.memo.dto.MemoResponseDto;
 import com.sparta.memo.entity.Memo;
 import com.sparta.memo.memoRepositary.memoRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -15,11 +16,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import org.springframework.context.ApplicationContext;
+
 @Component
 public class memoService {
     private final memoRepository repo; // repository
-    public memoService(memoRepository jdbcTemplate) {
-        repo = jdbcTemplate; // repository
+    public memoService(ApplicationContext applicationContext) {
+        memoRepository repo = applicationContext.getBean(memoRepository.class);
+        this.repo = repo; // repository
     }
 
     public MemoResponseDto createMemo(MemoRequestDto requestDto) { // create memo service
