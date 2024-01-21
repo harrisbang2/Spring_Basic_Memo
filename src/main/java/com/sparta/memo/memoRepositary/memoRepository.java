@@ -3,6 +3,8 @@ package com.sparta.memo.memoRepositary;
 import com.sparta.memo.dto.MemoRequestDto;
 import com.sparta.memo.dto.MemoResponseDto;
 import com.sparta.memo.entity.Memo;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -18,8 +20,8 @@ import java.util.List;
 public class memoRepository {
     Memo memo; // memo
     private JdbcTemplate jdbcTemplate;
-    @Autowired
-    public void setmemoRepository(JdbcTemplate jdbcTemplate) {
+
+    public memoRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;// repository
     }
 
@@ -96,5 +98,15 @@ public class memoRepository {
         } else {
             throw new IllegalArgumentException("선택한 메모는 존재하지 않습니다.");
         }
+    }
+
+    @Transactional
+    public Memo createMemo(EntityManager em) {
+        Memo memo = em.find(Memo.class, 1);
+        memo.setUsername("Robbie");
+        memo.setContents("@Transactional 전파 테스트 중!");
+
+        System.out.println("createMemo 메서드 종료");
+        return memo;
     }
 }
