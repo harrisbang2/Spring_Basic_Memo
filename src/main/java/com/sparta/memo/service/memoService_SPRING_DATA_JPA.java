@@ -40,7 +40,7 @@ public class memoService_SPRING_DATA_JPA {
     public List<MemoResponseDto> getMemos() {
 
         return repo.findAll().stream().map(MemoResponseDto::new).toList();
-    }
+    }//
     @Transactional
     public Long UpdateMemo(long id, MemoRequestDto requestDto) {
         // 해당 메모가 DB에 존재하는지 확인
