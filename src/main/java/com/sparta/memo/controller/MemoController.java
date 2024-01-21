@@ -4,6 +4,7 @@ import com.sparta.memo.dto.MemoRequestDto;
 import com.sparta.memo.dto.MemoResponseDto;
 import com.sparta.memo.entity.Memo;
 import com.sparta.memo.service.memoService;
+import com.sparta.memo.service.memoService_SPRING_DATA_JPA;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -20,9 +21,9 @@ import java.util.List;
 @RequestMapping("/api")
 public class MemoController {
 
-    private final memoService memos ;
+    private final memoService_SPRING_DATA_JPA memos ;
 
-    public MemoController(memoService memoservice) {
+    public MemoController(memoService_SPRING_DATA_JPA memoservice) {
         this.memos = memoservice;
     }
 
@@ -39,7 +40,7 @@ public class MemoController {
 
     @PutMapping("/memos/{id}")
     public Long updateMemo(@PathVariable Long id, @RequestBody MemoRequestDto requestDto) {
-     return memos.putMemo(id,requestDto);
+     return memos.UpdateMemo(id,requestDto);
     }
 
     @DeleteMapping("/memos/{id}")
